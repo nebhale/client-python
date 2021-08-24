@@ -12,17 +12,15 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/cache@v2
       with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'requirements-dev.txt') }}
+        path: ~/.cache/pypoetry/virtualenvs
+        key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
         restore-keys: |
-          ${{ runner.os }}-pip-
+          ${{ runner.os }}-poetry-
           ${{ runner.os }}-
     - uses: actions/setup-python@v2
       with:
         python-version: '3.x'
     - uses: Gr1N/setup-poetry@v7
-      with:
-        poetry-version: '1.x'
     - name: Run Install
       run: poetry install
     - name: Run Tests
