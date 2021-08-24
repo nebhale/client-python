@@ -15,20 +15,20 @@
 import unittest
 from unittest import TestCase
 
-from secret import is_valid_secret_key
+from bindings.secret import is_valid_secret_key
 
 
 class TestSecret(TestCase):
     def test_is_valid_secret_key_valid(self):
         valid = [
-            'alpha',
-            'BRAVO',
-            'Charlie',
-            'delta01',
-            'echo-foxtrot',
-            'golf_hotel',
-            'india.juliet',
-            '.kilo',
+            "alpha",
+            "BRAVO",
+            "Charlie",
+            "delta01",
+            "echo-foxtrot",
+            "golf_hotel",
+            "india.juliet",
+            ".kilo",
         ]
 
         for v in valid:
@@ -36,12 +36,12 @@ class TestSecret(TestCase):
 
     def test_is_valid_secret_key_invalid(self):
         valid = [
-            'lima^mike',
+            "lima^mike",
         ]
 
         for v in valid:
             self.assertFalse(is_valid_secret_key(v))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

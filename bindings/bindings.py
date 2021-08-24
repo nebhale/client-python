@@ -15,17 +15,16 @@
 import os
 from functools import reduce
 from os import path
-from typing import Optional
+from typing import List, Optional
 
-import binding
-from binding import Binding, CacheBinding, ConfigTreeBinding
+from bindings.binding import Binding, CacheBinding, ConfigTreeBinding
 
-SERVICE_BINDING_ROOT: str = 'SERVICE_BINDING_ROOT'
-"""The name of the environment variable read to determine the bindings filesystem root.  Specified by the Kubernetes 
+SERVICE_BINDING_ROOT: str = "SERVICE_BINDING_ROOT"
+"""The name of the environment variable read to determine the bindings filesystem root.  Specified by the Kubernetes
 Service Binding Specification: https://github.com/k8s-service-bindings/spec#workload-projection """
 
 
-def cached(bindings: [Binding]) -> [Binding]:
+def cached(bindings: List[Binding]) -> List[Binding]:
     """
     Wraps each Binding in a CacheBinding.
 
@@ -33,10 +32,10 @@ def cached(bindings: [Binding]) -> [Binding]:
     :return: the wrapped bindings
     """
 
-    return map(lambda v: CacheBinding(v), bindings)
+    return [CacheBinding(v) for v in bindings]
 
 
-def from_path(root: str) -> [Binding]:
+def from_path(root: str) -> List[Binding]:
     """
     Creates a new collection of Bindings using the specified root.  If the directory does not exist,
     an empty collection is returned.
@@ -48,7 +47,7 @@ def from_path(root: str) -> [Binding]:
     if not path.exists(root) or not path.isdir(root):
         return []
 
-    def r(b: [Binding], c: str) -> [Binding]:
+    def r(b: List[Binding], c: str) -> List[Binding]:
         p = path.join(root, c)
 
         if path.isdir(p):
@@ -59,7 +58,7 @@ def from_path(root: str) -> [Binding]:
     return reduce(r, os.listdir(root), [])
 
 
-def from_service_binding_root() -> [Binding]:
+def from_service_binding_root() -> List[Binding]:
     """
     Creates a new collection of Bindings using the $SERVICE_BINDING_ROOT environment variable to determine the file
     system root.  If the $SERVICE_BINDING_ROOT environment variable is not set, an empty collection is returned.  If
@@ -71,7 +70,7 @@ def from_service_binding_root() -> [Binding]:
     return [] if path is None else from_path(path)
 
 
-def find(bindings: [Binding], name: str) -> Optional[Binding]:
+def find(bindings: List[Binding], name: str) -> Optional[Binding]:
     """
     Returns a Binding with a given name.  Comparison is case-insensitive.
 
@@ -87,7 +86,7 @@ def find(bindings: [Binding], name: str) -> Optional[Binding]:
     return None
 
 
-def filter(bindings: [Binding], type: Optional[str] = None, provider: Optional[str] = None) -> [Binding]:
+def filter(bindings: List[Binding], type: Optional[str] = None, provider: Optional[str] = None) -> List[Binding]:
     """
     Returns zero or more Bindings with a given type and provider.  If type or provider are None, the result is not
     filter on that argument.  Comparisons are case-insensitive.
@@ -102,12 +101,12 @@ def filter(bindings: [Binding], type: Optional[str] = None, provider: Optional[s
 
     for b in bindings:
         if type is not None:
-            t = binding.get_type(b)
+            t = b.get_type()
             if t.lower() != type.lower():
                 continue
 
         if provider is not None:
-            p = binding.get_provider(b)
+            p = b.get_provider()
             if p is None or p.lower() != provider.lower():
                 continue
 

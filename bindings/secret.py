@@ -14,10 +14,10 @@
 
 import re
 
-VALID_SECRET_KEY = re.compile(r'^[A-Za-z0-9\-_.]+$')
+VALID_SECRET_KEY = re.compile(r"^[A-Za-z0-9\-_.]+$")
 
 
-def is_valid_secret_key(key):
+def is_valid_secret_key(key: str) -> bool:
     """
     Tests whether a str is a valid Kubernetes Secret key:
     https://kubernetes.io/docs/concepts/configuration/secret/#overview-of-secrets

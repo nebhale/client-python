@@ -13,14 +13,14 @@
 # limitations under the License.
 
 from os import path
-from typing import Optional, Dict
+from typing import Dict, Optional
 
-from secret import is_valid_secret_key
+from bindings.secret import is_valid_secret_key
 
-PROVIDER: str = 'provider'
+PROVIDER: str = "provider"
 """The key for the provider of a binding"""
 
-TYPE: str = 'type'
+TYPE: str = "type"
 """The key for the type of a binding"""
 
 
@@ -45,47 +45,42 @@ class Binding:
         """
         pass
 
+    def get(self, key: str) -> Optional[str]:
+        """
+        Returns the contents of a binding entry as a UTF-8 decoded str.  Any whitespace is trimmed.
 
-def get(binding: Binding, key: str) -> Optional[str]:
-    """
-    Returns the contents of a binding entry as a UTF-8 decoded str.  Any whitespace is trimmed.
+        :param key: the key of the entry to retrieve
+        :return: the contents of a binding entry as a UTF-8 decoded str if it exists, otherwise None
+        """
 
-    :param binding: the binding to read from
-    :param key: the key of the entry to retrieve
-    :return: the contents of a binding entry as a UTF-8 decoded str if it exists, otherwise None
-    """
+        b = self.get_as_bytes(key)
 
-    b = binding.get_as_bytes(key)
+        if b is None:
+            return None
 
-    if b is None:
-        return None
+        return b.decode("utf-8").strip()
 
-    return b.decode('utf-8').strip()
+    def get_provider(self) -> Optional[str]:
+        """
+        Returns the value of the PROVIDER key.
 
+        :return: the value of the PROVIDER key if it exists, otherwise None
+        """
 
-def get_provider(binding: Binding) -> Optional[str]:
-    """
-    Returns the value of the PROVIDER key.
+        return self.get(PROVIDER)
 
-    :param binding: the binding to read from
-    :return: the value of the PROVIDER key if it exists, otherwise None
-    """
+    def get_type(self) -> str:
+        """
+        Returns the value of the TYPE key.
 
-    return get(binding, PROVIDER)
+        :param binding: the binding to read from
+        :return: the value of the TYPE key
+        """
 
-
-def get_type(binding: Binding) -> str:
-    """
-    Returns the value of the TYPE key.
-
-    :param binding: the binding to read from
-    :return: the value of the TYPE key
-    """
-
-    t = get(binding, TYPE)
-    if t is None:
-        raise ValueError("binding does not contain a type")
-    return t
+        t = self.get(TYPE)
+        if t is None:
+            raise ValueError("binding does not contain a type")
+        return t
 
 
 class CacheBinding(Binding):
@@ -147,7 +142,7 @@ class ConfigTreeBinding(Binding):
 
         print(path.abspath(p))
 
-        with open(p, 'rb') as file:
+        with open(p, "rb") as file:
             return file.read()
 
     def get_name(self) -> str:
