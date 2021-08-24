@@ -24,6 +24,6 @@ jobs:
     - name: Run Install
       run: poetry install
     - name: Run Tests
-      run: pytest --cov=./ --cov-report=xml
+      run: poetry run pytest --cov=./ --cov-report=xml
     - name: Report coverage
       run: bash <(curl -s https://codecov.io/bash)
