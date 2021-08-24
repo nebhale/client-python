@@ -71,17 +71,17 @@ class TestBinding(unittest.TestCase):
         self.assertEqual(1, s.get_name_count)
 
     def test_ConfigTreeBinding_get_as_bytes_missing_key(self):
-        b = binding.ConfigTreeBinding(path.join("testdata", "test-k8s"))
+        b = binding.ConfigTreeBinding(path.join("tests", "testdata", "test-k8s"))
 
         self.assertIsNone(b.get_as_bytes("test-missing-key"))
 
     def test_ConfigTreeBinding_get_as_bytes_directory(self):
-        b = binding.ConfigTreeBinding(path.join("testdata", "test-k8s"))
+        b = binding.ConfigTreeBinding(path.join("tests", "testdata", "test-k8s"))
 
         self.assertIsNone(b.get_as_bytes(".hidden-data"))
 
     def test_ConfigTreeBinding_get_as_bytes_invalid_key(self):
-        b = binding.ConfigTreeBinding(path.join("testdata", "test-k8s"))
+        b = binding.ConfigTreeBinding(path.join("tests", "testdata", "test-k8s"))
 
         self.assertIsNone(b.get_as_bytes("test^secret^key"))
 
