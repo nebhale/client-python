@@ -14,6 +14,7 @@
 
 import os
 import unittest
+from os import path
 
 from bindings import binding, bindings
 
@@ -30,11 +31,11 @@ class TestBindings(unittest.TestCase):
         self.assertEqual(0, len(v))
 
     def test_from_non_directory(self):
-        v = bindings.from_path("tests/testdata/additional-file")
+        v = bindings.from_path(path.join("tests", "testdata", "additional-file"))
         self.assertEqual(0, len(v))
 
     def test_from_exists(self):
-        v = bindings.from_path("tests/testdata")
+        v = bindings.from_path(path.join("tests", "testdata"))
         self.assertEqual(3, len(v))
 
     def test_from_service_binding_root_unset(self):
@@ -43,7 +44,7 @@ class TestBindings(unittest.TestCase):
 
     def test_from_service_binding_root_set(self):
         old = os.getenv("SERVICE_BINDING_ROOT")
-        os.environ["SERVICE_BINDING_ROOT"] = "tests/testdata"
+        os.environ["SERVICE_BINDING_ROOT"] = path.join("tests", "testdata")
 
         try:
             v = bindings.from_service_binding_root()

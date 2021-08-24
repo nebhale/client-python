@@ -91,7 +91,7 @@ class TestBinding(unittest.TestCase):
         self.assertEqual(b"test-secret-value\n", b.get_as_bytes("test-secret-key"))
 
     def test_ConfigTreeBinding_get_name(self):
-        b = binding.ConfigTreeBinding(path.join("testdata", "test-k8s"))
+        b = binding.ConfigTreeBinding(path.join("tests", "testdata", "test-k8s"))
 
         self.assertEqual("test-k8s", b.get_name())
 
