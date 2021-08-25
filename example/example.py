@@ -20,7 +20,7 @@ b = bindings.from_service_binding_root()
 b = bindings.filter(b, "postgresql")
 
 if len(b) != 1:
-    raise ValueError("Incorrect number of PostgreSQL bindings: %s" % len(b))
+    raise ValueError("Incorrect number of PostgreSQL bindings: %d" % len(b))
 
 u = b[0].get("url")
 if u is None:

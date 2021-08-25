@@ -21,7 +21,7 @@ from bindings.binding import Binding, CacheBinding, ConfigTreeBinding
 
 SERVICE_BINDING_ROOT: str = "SERVICE_BINDING_ROOT"
 """The name of the environment variable read to determine the bindings filesystem root.  Specified by the Kubernetes
-Service Binding Specification: https://github.com/k8s-service-bindings/spec#workload-projection """
+Service Binding Specification: https://github.com/k8s-service-bindings/spec#workload-projection"""
 
 
 def cached(bindings: List[Binding]) -> List[Binding]:

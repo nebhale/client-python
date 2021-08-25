@@ -73,7 +73,6 @@ class Binding:
         """
         Returns the value of the TYPE key.
 
-        :param binding: the binding to read from
         :return: the value of the TYPE key
         """
 
@@ -84,7 +83,7 @@ class Binding:
 
 
 class CacheBinding(Binding):
-    """An implementation of Binding that caches values once they've been retrieved"""
+    """An implementation of Binding that caches values once they've been retrieved."""
 
     _delegate: Binding
 
@@ -114,7 +113,7 @@ class CacheBinding(Binding):
 
 
 class ConfigTreeBinding(Binding):
-    """An implementation of Binding that reads files from a volume mounted Kubnernetes Secret:
+    """An implementation of Binding that reads files from a volume mounted Kubernetes Secret:
     https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets"""
 
     _root: str
@@ -123,7 +122,7 @@ class ConfigTreeBinding(Binding):
         """
         Creates a new instance.
 
-        :param root: the root of the volume mounted Kubernetes secret
+        :param root: the root of the volume mounted Kubernetes Secret
         """
 
         self._root = root
@@ -139,8 +138,6 @@ class ConfigTreeBinding(Binding):
 
         if not path.isfile(p):
             return None
-
-        print(path.abspath(p))
 
         with open(p, "rb") as file:
             return file.read()
