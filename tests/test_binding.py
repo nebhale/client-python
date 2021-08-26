@@ -110,7 +110,7 @@ class TestBinding(unittest.TestCase):
 
         self.assertEqual(b"test-secret-value\n", b.get_as_bytes("test-secret-key"))
 
-    def test_DictBinding_get_as_bytes_get_name(self):
+    def test_DictBinding_get_name(self):
         b = binding.DictBinding("test-name", {})
 
         self.assertEqual("test-name", b.get_name())

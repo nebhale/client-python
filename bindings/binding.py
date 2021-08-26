@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from os import path
+from threading import Lock
 from typing import Dict, Optional
 
 from bindings.secret import is_valid_secret_key
@@ -26,7 +27,7 @@ TYPE: str = "type"
 
 class Binding:
     """A representation of a binding as defined by the Kubernetes Service Binding Specification:
-    https://github.com/k8s-service-bindings/spec#workload-projection"""
+    https://github.com/k8s-service-bindings/spec#workload-projection."""
 
     def get_as_bytes(self, key: str) -> Optional[bytes]:
         """
@@ -86,8 +87,8 @@ class CacheBinding(Binding):
     """An implementation of Binding that caches values once they've been retrieved."""
 
     _delegate: Binding
-
     _cache: Dict[str, bytes]
+    _mutex: Lock
 
     def __init__(self, delegate: Binding):
         """
@@ -98,15 +99,21 @@ class CacheBinding(Binding):
 
         self._delegate = delegate
         self._cache = {}
+        self._mutex = Lock()
 
     def get_as_bytes(self, key: str) -> Optional[bytes]:
-        if key in self._cache:
-            return self._cache[key]
+        self._mutex.acquire()
 
-        v = self._delegate.get_as_bytes(key)
-        if v is not None:
-            self._cache[key] = v
-        return v
+        try:
+            if key in self._cache:
+                return self._cache[key]
+
+            v = self._delegate.get_as_bytes(key)
+            if v is not None:
+                self._cache[key] = v
+            return v
+        finally:
+            self._mutex.release()
 
     def get_name(self) -> str:
         return self._delegate.get_name()
@@ -114,7 +121,7 @@ class CacheBinding(Binding):
 
 class ConfigTreeBinding(Binding):
     """An implementation of Binding that reads files from a volume mounted Kubernetes Secret:
-    https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets"""
+    https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets."""
 
     _root: str
 
@@ -133,10 +140,7 @@ class ConfigTreeBinding(Binding):
 
         p = path.join(self._root, key)
 
-        if not path.exists(p):
-            return None
-
-        if not path.isfile(p):
+        if not path.exists(p) or not path.isfile(p):
             return None
 
         with open(p, "rb") as file:
@@ -150,7 +154,6 @@ class DictBinding(Binding):
     """An implementation of Binding that returns values from a dict"""
 
     _name: str
-
     _content: Dict[str, bytes]
 
     def __init__(self, name: str, content: Dict[str, bytes]):
