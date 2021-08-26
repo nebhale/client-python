@@ -20,6 +20,11 @@ from bindings import binding, bindings
 
 
 class TestBinding(unittest.TestCase):
+    def test_get(self):
+        b = binding.DictBinding("test-name", {"test-secret-key": b"test-secret-value\n"})
+
+        self.assertEqual("test-secret-value", b.get("test-secret-key"))
+
     def test_get_provider_invalid_key(self):
         b = binding.DictBinding("test-name", {})
 
