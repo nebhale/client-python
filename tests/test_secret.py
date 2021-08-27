@@ -19,7 +19,7 @@ from bindings.secret import is_valid_secret_key
 
 
 class TestSecret(TestCase):
-    def test_is_valid_secret_key_valid(self):
+    def test__is_valid_secret_key__valid(self):
         valid = [
             "alpha",
             "BRAVO",
@@ -34,7 +34,7 @@ class TestSecret(TestCase):
         for v in valid:
             self.assertTrue(is_valid_secret_key(v))
 
-    def test_is_valid_secret_key_invalid(self):
+    def test__is_valid_secret_key__invalid(self):
         valid = [
             "lima^mike",
         ]
