@@ -82,9 +82,12 @@ class TestBindings(unittest.TestCase):
                 "type": b"test-type-2",
                 "provider": b"test-provider-2",
             }),
+            binding.DictBinding("test-name-4", {
+                "type": b"test-type-2",
+            }),
         ]
 
-        self.assertEqual(3, len(bindings.filter(b)))
+        self.assertEqual(4, len(bindings.filter(b)))
 
     def test_filter_type(self):
         b = [
@@ -99,6 +102,9 @@ class TestBindings(unittest.TestCase):
             binding.DictBinding("test-name-3", {
                 "type": b"test-type-2",
                 "provider": b"test-provider-2",
+            }),
+            binding.DictBinding("test-name-4", {
+                "type": b"test-type-2",
             }),
         ]
 
@@ -118,6 +124,9 @@ class TestBindings(unittest.TestCase):
                 "type": b"test-type-2",
                 "provider": b"test-provider-2",
             }),
+            binding.DictBinding("test-name-4", {
+                "type": b"test-type-2",
+            }),
         ]
 
         self.assertEqual(2, len(bindings.filter(b, None, "test-provider-2")))
@@ -135,6 +144,9 @@ class TestBindings(unittest.TestCase):
             binding.DictBinding("test-name-3", {
                 "type": b"test-type-2",
                 "provider": b"test-provider-2",
+            }),
+            binding.DictBinding("test-name-4", {
+                "type": b"test-type-2",
             }),
         ]
 
