@@ -17,7 +17,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-poetry-
           ${{ runner.os }}-
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.x'
     - uses: Gr1N/setup-poetry@v7
