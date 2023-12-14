@@ -54,7 +54,7 @@ pytest-cov = "^4.1.0"
 flake8 = "^6.1.0"
 black = {version = "^23.12", allow-prereleases = true}
 mypy = "^1.7"
-isort = "^5.13.1"
+isort = "^5.13.2"
 psycopg2 = "^2.9.9"
 
 [build-system]
