@@ -51,7 +51,7 @@ python = "^3.9"
 [tool.poetry.dev-dependencies]
 pytest = "^7.4"
 pytest-cov = "^4.1.0"
-flake8 = "^6.1.0"
+flake8 = "^7.0.0"
 black = {version = "^23.12", allow-prereleases = true}
 mypy = "^1.8"
 isort = "^5.13.2"
