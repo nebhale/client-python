@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: Gr1N/setup-poetry@v8
+    - uses: Gr1N/setup-poetry@v9
     - uses: actions/setup-python@v5
       with:
         python-version: '3.x'
