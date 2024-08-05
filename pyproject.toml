@@ -52,7 +52,7 @@ python = "^3.9"
 pytest = "^8.3"
 pytest-cov = "^5.0.0"
 flake8 = "^7.1.0"
-black = {version = "^24.4", allow-prereleases = true}
+black = {version = "^24.8", allow-prereleases = true}
 mypy = "^1.11"
 isort = "^5.13.2"
 psycopg2 = "^2.9.9"
