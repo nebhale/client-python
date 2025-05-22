@@ -8,8 +8,6 @@ updates:
   labels:
   - dependencies
   - github-actions
-  reviewers:
-  - nebhale
 
 - package-ecosystem: pip
   directory: /
@@ -18,5 +16,3 @@ updates:
   labels:
   - dependencies
   - pip
-  reviewers:
-  - nebhale
