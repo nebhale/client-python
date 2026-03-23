@@ -50,7 +50,7 @@ python = "^3.9"
 
 [tool.poetry.dev-dependencies]
 pytest = "^8.4"
-pytest-cov = "^7.0.0"
+pytest-cov = "^7.1.0"
 flake8 = "^7.3.0"
 black = {version = "^25.11", allow-prereleases = true}
 mypy = "^1.19"
