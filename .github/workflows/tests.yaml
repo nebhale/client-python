@@ -17,8 +17,7 @@ jobs:
       with:
         enable-cache: true
     - name: Run Install
-      # Switch to `uv sync --locked` once uv.lock is committed
-      run: uv sync
+      run: uv sync --locked
     - name: Run Tests
       run: uv run pytest --cov=./ --cov-report=xml
     - name: Report coverage
