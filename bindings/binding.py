@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from abc import ABC, abstractmethod
 from os import path
 from threading import Lock
 from typing import Dict, Optional
@@ -25,10 +26,11 @@ TYPE: str = "type"
 """The key for the type of a binding"""
 
 
-class Binding:
+class Binding(ABC):
     """A representation of a binding as defined by the Kubernetes Service Binding Specification:
     https://github.com/k8s-service-bindings/spec#workload-projection."""
 
+    @abstractmethod
     def get_as_bytes(self, key: str) -> Optional[bytes]:
         """
         Returns the contents of a binding entry in its raw bytes form.
@@ -38,6 +40,7 @@ class Binding:
         """
         pass
 
+    @abstractmethod
     def get_name(self) -> str:
         """
         Returns the name of the binding

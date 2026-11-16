@@ -12,31 +12,47 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-[tool.poetry]
+[project]
 name = "service-bindings"
 version = "1.0.0"
 description = "A library to access [Service Binding Specification for Kubernetes](https://k8s-service-bindings.github.io/spec/) conformant Service Binding [Workload Projections](https://k8s-service-bindings.github.io/spec/#workload-projection)."
+readme = "README.md"
 license = "Apache-2.0"
-authors = ["Ben Hale <nebhale@nebhale.com>"]
-readme = 'README.md'
-homepage = "https://github.com/nebhale/client-python"
-repository = "https://github.com/nebhale/client-python"
+authors = [{ name = "Ben Hale", email = "nebhale@nebhale.com" }]
+requires-python = ">=3.11"
+dependencies = []
 
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: Apache Software License",
   "Programming Language :: Python :: 3 :: Only",
   "Topic :: Software Development :: Libraries :: Application Frameworks",
 ]
 
+[project.urls]
+Homepage = "https://github.com/nebhale/client-python"
+Repository = "https://github.com/nebhale/client-python"
+
+[dependency-groups]
+dev = [
+  "pytest>=9.2,<10",
+  "pytest-cov>=7.1.0,<8",
+  "flake8>=7.5.0,<8",
+  "black>=26.10,<27",
+  "mypy>=2.4,<3",
+  "isort>=9.0.2,<10",
+  "psycopg2>=2.9.13,<3",
+]
+
+# The module is named "bindings", not "service_bindings", so the build backend needs to be told where it lives.
+[tool.poetry]
 packages = [
   { include = "bindings" }
 ]
 
 [tool.black]
 line-length = 120
-target-version = ['py39']
+target-version = ['py311']
 
 [tool.isort]
 multi_line_output = 3
@@ -45,18 +61,6 @@ force_grid_wrap = 0
 use_parentheses = true
 line_length = 120
 
-[tool.poetry.dependencies]
-python = "^3.9"
-
-[tool.poetry.dev-dependencies]
-pytest = "^8.4"
-pytest-cov = "^7.1.0"
-flake8 = "^7.3.0"
-black = {version = "^25.11", allow-prereleases = true}
-mypy = "^1.19"
-isort = "^6.1.0"
-psycopg2 = "^2.9.12"
-
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.2.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
