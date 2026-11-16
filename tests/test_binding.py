@@ -25,9 +25,12 @@ class TestBinding(unittest.TestCase):
         self.assertIsNone(b.get("test-missing-key"))
 
     def test__get__valid(self):
-        b = binding.DictBinding("test-name", {
-            "test-secret-key": b"test-secret-value\n",
-        })
+        b = binding.DictBinding(
+            "test-name",
+            {
+                "test-secret-key": b"test-secret-value\n",
+            },
+        )
 
         self.assertEqual("test-secret-value", b.get("test-secret-key"))
 
@@ -37,9 +40,12 @@ class TestBinding(unittest.TestCase):
         self.assertIsNone(b.get_provider())
 
     def test__get_provider__valid(self):
-        b = binding.DictBinding("test-name", {
-            "provider": b"test-provider-1",
-        })
+        b = binding.DictBinding(
+            "test-name",
+            {
+                "provider": b"test-provider-1",
+            },
+        )
 
         self.assertEqual("test-provider-1", b.get_provider())
 
@@ -48,9 +54,12 @@ class TestBinding(unittest.TestCase):
         self.assertRaises(ValueError, lambda: b.get_type())
 
     def test__get_type__valid(self):
-        b = binding.DictBinding("test-name", {
-            "type": b"test-type-1",
-        })
+        b = binding.DictBinding(
+            "test-name",
+            {
+                "type": b"test-type-1",
+            },
+        )
 
         self.assertEqual("test-type-1", b.get_type())
 
@@ -107,9 +116,12 @@ class TestBinding(unittest.TestCase):
         self.assertIsNone(b.get_as_bytes("test^secret^key"))
 
     def test__DictBinding__valid(self):
-        b = binding.DictBinding("test-name", {
-            "test-secret-key": b"test-secret-value\n",
-        })
+        b = binding.DictBinding(
+            "test-name",
+            {
+                "test-secret-key": b"test-secret-value\n",
+            },
+        )
 
         self.assertEqual(b"test-secret-value\n", b.get_as_bytes("test-secret-key"))
 

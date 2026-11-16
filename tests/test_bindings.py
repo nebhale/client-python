@@ -21,10 +21,12 @@ from bindings import binding, bindings
 
 class TestBindings(unittest.TestCase):
     def test__cached(self):
-        b = bindings.cached([
-            binding.DictBinding("test-name-1", {}),
-            binding.DictBinding("test-name-2", {}),
-        ])
+        b = bindings.cached(
+            [
+                binding.DictBinding("test-name-1", {}),
+                binding.DictBinding("test-name-2", {}),
+            ]
+        )
 
         for b in b:
             self.assertIs(binding.CacheBinding, type(b))
@@ -70,84 +72,132 @@ class TestBindings(unittest.TestCase):
 
     def test_filter_none(self):
         b = [
-            binding.DictBinding("test-name-1", {
-                "type": b"test-type-1",
-                "provider": b"test-provider-1",
-            }),
-            binding.DictBinding("test-name-2", {
-                "type": b"test-type-1",
-                "provider": b"test-provider-2",
-            }),
-            binding.DictBinding("test-name-3", {
-                "type": b"test-type-2",
-                "provider": b"test-provider-2",
-            }),
-            binding.DictBinding("test-name-4", {
-                "type": b"test-type-2",
-            }),
+            binding.DictBinding(
+                "test-name-1",
+                {
+                    "type": b"test-type-1",
+                    "provider": b"test-provider-1",
+                },
+            ),
+            binding.DictBinding(
+                "test-name-2",
+                {
+                    "type": b"test-type-1",
+                    "provider": b"test-provider-2",
+                },
+            ),
+            binding.DictBinding(
+                "test-name-3",
+                {
+                    "type": b"test-type-2",
+                    "provider": b"test-provider-2",
+                },
+            ),
+            binding.DictBinding(
+                "test-name-4",
+                {
+                    "type": b"test-type-2",
+                },
+            ),
         ]
 
         self.assertEqual(4, len(bindings.filter(b)))
 
     def test_filter_type(self):
         b = [
-            binding.DictBinding("test-name-1", {
-                "type": b"test-type-1",
-                "provider": b"test-provider-1",
-            }),
-            binding.DictBinding("test-name-2", {
-                "type": b"test-type-1",
-                "provider": b"test-provider-2",
-            }),
-            binding.DictBinding("test-name-3", {
-                "type": b"test-type-2",
-                "provider": b"test-provider-2",
-            }),
-            binding.DictBinding("test-name-4", {
-                "type": b"test-type-2",
-            }),
+            binding.DictBinding(
+                "test-name-1",
+                {
+                    "type": b"test-type-1",
+                    "provider": b"test-provider-1",
+                },
+            ),
+            binding.DictBinding(
+                "test-name-2",
+                {
+                    "type": b"test-type-1",
+                    "provider": b"test-provider-2",
+                },
+            ),
+            binding.DictBinding(
+                "test-name-3",
+                {
+                    "type": b"test-type-2",
+                    "provider": b"test-provider-2",
+                },
+            ),
+            binding.DictBinding(
+                "test-name-4",
+                {
+                    "type": b"test-type-2",
+                },
+            ),
         ]
 
         self.assertEqual(2, len(bindings.filter(b, "test-type-1")))
 
     def test_filter_provider(self):
         b = [
-            binding.DictBinding("test-name-1", {
-                "type": b"test-type-1",
-                "provider": b"test-provider-1",
-            }),
-            binding.DictBinding("test-name-2", {
-                "type": b"test-type-1",
-                "provider": b"test-provider-2",
-            }),
-            binding.DictBinding("test-name-3", {
-                "type": b"test-type-2",
-                "provider": b"test-provider-2",
-            }),
-            binding.DictBinding("test-name-4", {
-                "type": b"test-type-2",
-            }),
+            binding.DictBinding(
+                "test-name-1",
+                {
+                    "type": b"test-type-1",
+                    "provider": b"test-provider-1",
+                },
+            ),
+            binding.DictBinding(
+                "test-name-2",
+                {
+                    "type": b"test-type-1",
+                    "provider": b"test-provider-2",
+                },
+            ),
+            binding.DictBinding(
+                "test-name-3",
+                {
+                    "type": b"test-type-2",
+                    "provider": b"test-provider-2",
+                },
+            ),
+            binding.DictBinding(
+                "test-name-4",
+                {
+                    "type": b"test-type-2",
+                },
+            ),
         ]
 
         self.assertEqual(2, len(bindings.filter(b, None, "test-provider-2")))
 
     def test_filter_type_and_provider(self):
         b = [
-            binding.DictBinding("test-name-1", {
-                "type": b"test-type-1",
-                "provider": b"test-provider-1",
-            }),
-            binding.DictBinding("test-name-2", {
-                "type": b"test-type-1",
-                "provider": b"test-provider-2",
-            }),
-            binding.DictBinding("test-name-3", {
-                "type": b"test-type-2",
-                "provider": b"test-provider-2",
-            }),
-            binding.DictBinding("test-name-4", {
-                "type": b"test-type-2",
-            }),
+            binding.DictBinding(
+                "test-name-1",
+                {
+                    "type": b"test-type-1",
+                    "provider": b"test-provider-1",
+                },
+            ),
+            binding.DictBinding(
+                "test-name-2",
+                {
+                    "type": b"test-type-1",
+                    "provider": b"test-provider-2",
+                },
+            ),
+            binding.DictBinding(
+                "test-name-3",
+                {
+                    "type": b"test-type-2",
+                    "provider": b"test-provider-2",
+                },
+            ),
+            binding.DictBinding(
+                "test-name-4",
+                {
+                    "type": b"test-type-2",
+                },
+            ),
         ]
 
         self.assertEqual(1, len(bindings.filter(b, "test-type-1", "test-provider-1")))

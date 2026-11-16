@@ -8,16 +8,20 @@ jobs:
   unit:
     name: Unit Test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
     - uses: actions/checkout@v7
-    - uses: Gr1N/setup-poetry@v10
-    - uses: actions/setup-python@v7
+    - uses: astral-sh/setup-uv@v10.3.3
       with:
-        python-version: '3.x'
-        cache: 'poetry'
+        enable-cache: true
     - name: Run Install
-      run: poetry install
+      # Switch to `uv sync --locked` once uv.lock is committed
+      run: uv sync
     - name: Run Tests
-      run: poetry run pytest --cov=./ --cov-report=xml
+      run: uv run pytest --cov=./ --cov-report=xml
     - name: Report coverage
-      run: bash <(curl -s https://codecov.io/bash)
+      uses: codecov/codecov-action@v7
+      with:
+        use_oidc: true
